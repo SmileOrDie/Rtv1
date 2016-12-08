@@ -1,17 +1,18 @@
 #include "../includes/error.h"
+#include "../includes/rtv1.h"
 
-unsigned int	ft_strlen(char *str)
-{
-	int i;
+// unsigned int	ft_strlen(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	if (!str[i])
-		ft_error (ARG_N , "unsigned int ft_strlen(char *str)");
-	else
-		while (str[i])
-			i++;
-	return (i);
-}
+// 	i = 0;
+// 	if (!str[i])
+// 		ft_error (ARG_N , "unsigned int ft_strlen(char *str)");
+// 	else
+// 		while (str[i])
+// 			i++;
+// 	return (i);
+// }
 
 void			ft_error(char* error, char *in)
 {

@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/07 14:24:22 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/05 14:04:43 by shamdani         ###   ########.fr       */
+/*   Created: 2016/12/05 14:30:04 by shamdani          #+#    #+#             */
+/*   Updated: 2016/12/05 15:29:15 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/libft.h"
 
-#ifndef ERROR_H
-# define ERROR_H
+int			ft_tablen(char ***tab, int f)
+{
+	int i;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-# define	NUMBER_ARG	"number of argument not right :"
-# define	FILES_E		"No such file : "
-# define	MALLOC		"failed function malloc in :"
-# define	ARG_N		"argument can't be -NULL- in :"
-# define	MLX			"mlx failed :"
-
-void		ft_error(char* error, char *in);
-
-#endif
+	i = 0;
+	while ((*tab)[i])
+	{
+		if (f == 1)
+			free((*tab)[i]);
+		i++;
+	}
+	if (f == 1)
+	{
+		free(*tab);
+		*tab = NULL;
+	}
+	return (i);
+}

@@ -6,14 +6,14 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 09:28:02 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/22 14:05:22 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/08 18:54:57 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
 
-void			ft_angle_around(void *env, t_vector *hit, t_vector *dir_l)
+void			ft_angle_sphere(void *env, t_vector *hit, t_vector *dir_l)
 {
 	t_vector	*pho;
 	double		tmp;
@@ -25,23 +25,29 @@ void			ft_angle_around(void *env, t_vector *hit, t_vector *dir_l)
 	pho = vsub(hit, s->pos);
 	vnorm(pho);
 	tmp = vpscal(pho, dir_l);
-	e->light->norm = pho;
 	e->light->angle = (tmp < .0) ? 0 : tmp;
 	free(pho);
 }
 
 void			ft_angle_plane(void *env, t_vector *hit, t_vector *dir_l)
 {
-	double 		tmp;
 	t_env		*e;
 	t_plane		*p;
+	// t_vector	*n;
+	double		tmp;
 
 	(void)hit;
 	e = (t_env *)env;
 	p = (t_plane *)e->obj->obj;
 	tmp = vpscal(p->dir, dir_l);
-	e->light->norm = p->dir;
-	e->light->angle = (tmp < .0) ? tmp * -1 : tmp;
+	// if ( tmp < 0)
+	// {
+	// 	n = vmult_dbl(p->dir, -1);
+	// 	tmp = vpscal(n, dir_l);
+	// }
+	if (tmp < 0)
+		tmp *=-1;
+	e->light->angle = tmp;
 }
 
 void			ft_angle_cylinder(void *env, t_vector *p_hit, t_vector *l_vector)
@@ -79,9 +85,7 @@ void			ft_angle_cylinder(void *env, t_vector *p_hit, t_vector *l_vector)
 	vnorm(r);
 	vnorm(l_vector);
 	tmp = vpscal(r, l_vector);
-	e->light->norm = r;
 	e->light->angle = (tmp < .0) ? tmp * -1 : tmp;
-	// e->light->angle = 1;
 }
 
 void			ft_angle_cone(void *env, t_vector *p_hit, t_vector *l_vector)
@@ -119,6 +123,5 @@ void			ft_angle_cone(void *env, t_vector *p_hit, t_vector *l_vector)
 	vnorm(b);
 	vnorm(l_vector);
 	tmp = vpscal(b, l_vector);
-	e->light->norm = b;
 	e->light->angle = (tmp < .0) ? 0 : tmp;
 }

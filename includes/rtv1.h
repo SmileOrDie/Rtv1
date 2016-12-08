@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:45:45 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/22 14:35:37 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/08 16:24:55 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 # define RTV1_H
 
 # include "error.h"
+# include "../libft/includes/libft.h"
 # include "../vector/include/vector.h"
 # include "../matrix/include/matrix.h"
 # include <mlx.h>
-
+# include <fcntl.h>
 
 #include <stdio.h>
 
 
 # define ESC 53
 
-# define W 640
+# define W 650
 # define H 480
 
-# define T 20000
+# define T 2000000
 
 
 typedef struct		s_mlx
@@ -86,14 +87,6 @@ typedef	struct		s_obj
 	struct s_obj	*next;
 }					t_obj;
 
-// typedef struct		s_cam
-// {
-// 	t_vector		*pos;
-
-// 	t_vector		*rot;
-// 	unsigned int	f;
-// }					t_cam;
-
 typedef struct	s_cam
 {
 	t_vector	*eye;
@@ -117,6 +110,7 @@ typedef struct		s_light
 	double			intensity;
 	double 			angle;
 	t_vector		*norm;
+	t_vector		*vec;
 	struct s_light	*next;
 }					t_light;
 
@@ -129,12 +123,14 @@ typedef struct		s_env
 	t_obj			*l_obj;
 	t_obj			*obj;
 	t_color			*c_hit;
-	double			angle;
 	int				flag;
-
+	double			amb;
+	int				r;
+	int				g;
+	int				b;
 }					t_env;
 
-int		ft_parse(char *name_file, t_env *e);
+void	ft_parse(char *name_file, t_env *e);
 
 int		solve_quad(double a, double b, double c, double *t);
 
@@ -143,17 +139,16 @@ int		redcross(t_env *e);
 
 void	start_ray(t_env *e);
 
-t_obj	*new_sphere(t_color *color, t_vector *pos, double r);
-t_obj	*new_plane(t_color *color, t_vector *dir, t_vector *point);
-t_obj	*new_cylinder(t_color *color, t_vector *dir, t_vector *pos, double r);
-t_obj	*new_cone(t_color *color, t_vector *dir, t_vector *origine, double angle, int m);
+t_obj	*add_obj(char **line, int len);
+
+void	add_env(char **line, t_env *e);
 
 int 	inter_sphere(void *s, t_vector *o, t_vector *dir, double *t);
 int		inter_plane(void *s, t_vector *o, t_vector *dir, double *t);
 int 	inter_cylinder(void *cylinder, t_vector *o, t_vector *dir, double *t);
 int 	inter_cone(void *cone, t_vector *o, t_vector *dir, double *t);
 
-void	ft_angle_around(void *e, t_vector *hit, t_vector *dir_l);
+void	ft_angle_sphere(void *e, t_vector *hit, t_vector *dir_l);
 void	ft_angle_plane(void *e, t_vector *np, t_vector *dir_l);
 void	ft_angle_cylinder(void *env, t_vector *hit, t_vector *dir_l);
 void	ft_angle_cone(void *env, t_vector *hit, t_vector *dir_l);

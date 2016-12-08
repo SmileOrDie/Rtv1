@@ -6,7 +6,7 @@
 #    By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/04 13:11:01 by shamdani          #+#    #+#              #
-#    Updated: 2016/11/15 10:55:20 by shamdani         ###   ########.fr        #
+#    Updated: 2016/12/05 18:34:40 by shamdani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FUNC =	rtv1.c \
 		inter_object.c \
 		angle_object.c \
 		add_obj.c \
+		add_env.c \
 		solv_quad.c
 
 SRC = $(addprefix ./srcs/, $(FUNC))

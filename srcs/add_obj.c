@@ -6,13 +6,13 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 14:02:07 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/14 16:26:46 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/08 16:24:16 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-t_obj	*new_sphere(t_color *color, t_vector *pos, double r)
+static t_obj	*new_sphere(t_color *color, t_vector *pos, double r)
 {
 	t_obj		*obj;
 	t_sphere	*s;
@@ -24,14 +24,14 @@ t_obj	*new_sphere(t_color *color, t_vector *pos, double r)
 	s->pos = pos;
 	s->radius = r;
 	obj->inter_func = inter_sphere;
-	obj->angle_func = ft_angle_around;	
+	obj->angle_func = ft_angle_sphere;	
 	obj->obj = s;
 	obj->color = color;
 	obj->next = NULL;
 	return (obj);
 }
 
-t_obj	*new_plane(t_color *color, t_vector *dir, t_vector *point)
+static t_obj	*new_plane(t_color *color, t_vector *dir, t_vector *point)
 {
 	t_obj		*obj;
 	t_plane		*p;
@@ -52,7 +52,7 @@ t_obj	*new_plane(t_color *color, t_vector *dir, t_vector *point)
 }
 
 
-t_obj	*new_cylinder(t_color *color, t_vector *dir, t_vector *point, double r)
+static t_obj	*new_cylinder(t_color *color, t_vector *dir, t_vector *point, double r)
 {
 	t_obj		*obj;
 	t_cyl		*c;
@@ -73,7 +73,7 @@ t_obj	*new_cylinder(t_color *color, t_vector *dir, t_vector *point, double r)
 	return (obj);
 }
 
-t_obj	*new_cone(t_color *color, t_vector *dir, t_vector *pos, double angle, int m)
+static t_obj	*new_cone(t_color *color, t_vector *dir, t_vector *pos, double angle)
 {
 	t_obj		*obj;
 	t_cone		*c;
@@ -86,11 +86,39 @@ t_obj	*new_cone(t_color *color, t_vector *dir, t_vector *pos, double angle, int 
 	vnorm(c->dir);
 	c->pos = pos;
 	c->angle = angle;
-	c->m = m;
+	c->m = 1;
 	obj->inter_func = inter_cone;
 	obj->angle_func = ft_angle_cone;
 	obj->obj = c;
 	obj->color = color;
 	obj->next = NULL;
 	return (obj);
+}
+
+t_obj		*add_obj(char **line, int len)
+{
+	t_color *c;
+	t_vector *pos;
+	t_vector *dir;
+
+	c = get_color(ft_atoi(line[1]), ft_atoi(line[2]), ft_atoi(line[3]));
+	pos = new_v(ft_atof(line[4]), ft_atof(line[5]), ft_atof(line[6]));
+	if (len == 8 && ft_strcmp(line[0], "sphere") == 0)
+		return (new_sphere(c, pos, ft_atof(line[7])));
+	else if (len == 10 && ft_strcmp(line[0], "plane") == 0)
+	{
+		dir = new_v(ft_atof(line[7]), ft_atof(line[8]), ft_atof(line[9]));
+		return (new_plane(c, dir, pos));
+	}
+	else if (len == 11 && ft_strcmp(line[0], "cone") == 0)
+	{
+		dir = new_v(ft_atof(line[7]), ft_atof(line[8]), ft_atof(line[9]));
+		return (new_cone(c, dir, pos, ft_atof(line[10])));
+	}
+	else if (len == 11 && ft_strcmp(line[0], "cylinder") == 0)
+	{
+		dir = new_v(ft_atof(line[7]), ft_atof(line[8]), ft_atof(line[9]));
+		return (new_cylinder(c, dir, pos, ft_atof(line[10])));
+	}
+	return (NULL);
 }

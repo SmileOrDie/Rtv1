@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 11:31:39 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/09 11:22:21 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/05 18:45:14 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int			main(int ac,char **av)
 
 	if (ac == 2)
 	{
-		if (ft_parse(av[1], &e) == -1)
-			ft_error(FILES_E, av[1]);
+		ft_parse(av[1], &e);
 		init_mlx(&e);
 		start_ray(&e);
 		event_touch(&e);

@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 11:19:32 by shamdani          #+#    #+#             */
-/*   Updated: 2015/05/21 18:41:53 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/05 15:29:39 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int			ft_isblank(int c);
 char		**ft_strsplit(char const *s, char c);
 int			ft_getnbr(char *str);
 int			get_next_line(int const fd, char **line);
+double		ft_atof(char *str);
+int			ft_tablen(char ***tab, int f);
 
 #endif
