@@ -6,11 +6,23 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 11:31:39 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/05 18:45:14 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 13:12:21 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
+
+static void init(t_env *e)
+{
+	if (!(e->mlx = (t_mlx*)malloc(sizeof(t_mlx))))
+		ft_error (MALLOC , "int	ft_parse(char *name, t_env *e)(e->mlx)");
+	e->light = NULL;
+	e->obj = NULL;
+	e->cam = NULL;
+	e->mlx->w = 640;
+	e->mlx->h = 400;
+	e->amb = 0.4;
+}
 
 static void	init_mlx(t_env *e)
 {
@@ -36,6 +48,7 @@ int			main(int ac,char **av)
 
 	if (ac == 2)
 	{
+		init(&e);
 		ft_parse(av[1], &e);
 		init_mlx(&e);
 		start_ray(&e);
@@ -43,6 +56,6 @@ int			main(int ac,char **av)
 		mlx_loop(e.mlx->mlx);
 	}
 	else
-		ft_error(NUMBER_ARG, "rtv1 [Name of file]");
+		ft_error(NUMBER_ARG, "rtv1 [Path of file]");
 	return (1);
 }

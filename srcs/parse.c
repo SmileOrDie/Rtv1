@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 12:35:50 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/06 12:35:14 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 13:03:37 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,34 @@ static void 	creat_lst(char **line, t_env *e)
 		e->mlx->h = ft_atoi(line[2]);
 	}
 	else if (len > 7 && e->obj && ft_strcmp(line[0], "light") != 0 
-			&& ft_strcmp(line[0], "cam") != 0)
+		&& ft_strcmp(line[0], "cam") != 0)
 	{
 		e->obj->next = add_obj(line, len);
 		e->obj = e->obj->next;
 	}
 	else if (len > 7 && ft_strcmp(line[0], "light") 
-			&& ft_strcmp(line[0], "cam"))
+		&& ft_strcmp(line[0], "cam"))
 	{
 		e->obj = add_obj(line, len);
 		e->l_obj = e->obj;
 	}
-	else if (len > 7 && (ft_strcmp(line[0], "light") == 0
-			|| ft_strcmp(line[0], "cam") == 0))
+	else if ((len > 7 || len == 2)&& (ft_strcmp(line[0], "light") == 0
+		|| ft_strcmp(line[0], "cam") == 0 || !ft_strcmp(line[0], "ambient")))
 		add_env(line, e);
 	ft_tablen(&line, 1);
+}
+
+void			ft_check_var(t_env *e)
+{
+	if (e->amb < 0 || e->mlx->w < 0 || e->mlx->h < 0)
+		ft_error("parse error :", 
+				"a variable ambient or width or height can't be < 0");
+	else if (e->cam == NULL)
+		ft_error("camera error :", "no cam");
+	else if (e->light == NULL)
+		ft_error("light error :", "no light");
+	else if (e->obj == NULL)
+		ft_error("object error :", "no object");
 }
 
 void			ft_parse(char *name, t_env *e)
@@ -48,10 +61,6 @@ void			ft_parse(char *name, t_env *e)
 	char *line;
 
 	e->flag = 0;
-	e->light = NULL;
-	e->obj = NULL;
-	if (!(e->mlx = (t_mlx*)malloc(sizeof(t_mlx))))
-		ft_error (MALLOC , "int	ft_parse(char *name, t_env *e)(e->mlx)");
 	fd = open(name, O_RDONLY);
 	while ((r = get_next_line(fd, &line)) >= 0)
 	{
@@ -66,4 +75,5 @@ void			ft_parse(char *name, t_env *e)
 	close(fd);
 	e->obj = e->l_obj;
 	e->light = e->d_light;
+	ft_check_var(e);
 }

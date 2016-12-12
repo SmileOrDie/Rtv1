@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:47:49 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/08 19:27:10 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 12:22:39 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		ft_raytracer(int x, int y, t_env *e)
 				e->r += e->c_hit->r * e->light->color->x * e->light->angle;
 				e->g += e->c_hit->g * e->light->color->y * e->light->angle;
 				e->b += e->c_hit->b * e->light->color->z * e->light->angle;
-				l_color(e, 0.5);
+				l_color(e, e->light->intensity);
 			}
 			else
 				e->light->angle = 0;

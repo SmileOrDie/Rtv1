@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 18:21:56 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/05 19:40:10 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 13:05:53 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void		add_light(char ** line, t_env *e)//t_vector *color, t_vector *pos, 
 {
 	t_light *light;
 
-
 	if (!(light = (t_light *)malloc(sizeof(t_light))))
 		ft_error (MALLOC , "(=> e->light)-(parse.c)");
 	light->pos = new_v(ft_atof(line[4]), ft_atof(line[5]), ft_atof(line[6]));
@@ -71,9 +70,13 @@ static void		add_light(char ** line, t_env *e)//t_vector *color, t_vector *pos, 
 
 void	add_env(char **line, t_env *e)
 {
-
 	if (ft_strcmp(line[0], "light") == 0)
 		add_light(line, e);
 	else if (ft_strcmp(line[0], "cam") == 0)
+	{
+		e->flag = 1;
 	 	add_cam(line, e);
+	}
+	else if (ft_strcmp(line[0], "ambient") == 0)
+			e->amb = ft_atof(line[1]);
 }

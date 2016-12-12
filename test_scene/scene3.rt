@@ -1,35 +1,92 @@
 # Scene2 du rtv1
 # after the declaration of element, if you doesn't give a value to parameter its automaticly set to 0.
 
-# windows size declaration
-img_size 1024 800 
+
 
 # Ambient declaration
-Ambient 0.1
+ambient 0.1
+
+# windows size declaration
+img_size 1040 800 
 
 # camera declaration
-cam 0 0 -550 0 0 0 0 -1 0 60 150
+cam 0 150 -1550 0 0 0 0 -1 0 60 150
 
 # light declaration
-light 1 1 1 0 150 0 .5
+light 1 1 1 150 70 -300 1
 
 # light declaration
-light 1 1 1 150 200 -250 .5
+light 1 1 1 -150 70 -300 1
+
+###################################################
 
 # sphere declaration
-sphere 0 0 255 -100 100 200 20
+sphere 155 0 0 -200 250 200 30
 
 # cylinder declaration
-cylinder 255 0 255 0 0 150 0 1 0 20
+cylinder 155 0 0 -200 100 200 0 1 0 20
+
+# sphere declaration
+sphere 155 0 0 -200 -50 200 30
+
+###################################################
+
+###################################################
+
+# sphere declaration
+sphere 155 0 0 200 250 200 30
+
+# cylinder declaration
+cylinder 155 0 0 200 100 200 0 1 0 20
+
+# sphere declaration
+sphere 155 0 0 200 -50 200 30
+
+###################################################
+
+###################################################
+
+# sphere declaration
+sphere 155 0 0 200 250 -200 30
+
+# cylinder declaration
+cylinder 155 0 0 200 100 -200 0 1 0 20
+
+# sphere declaration
+sphere 155 0 0 200 -50 -200 30
+
+###################################################
+
+###################################################
+
+# sphere declaration
+sphere 155 0 0 -200 250 -200 30
+
+# cylinder declaration
+cylinder 155 0 0 -200 100 -200 0 1 0 20
+
+# sphere declaration
+sphere 155 0 0 -200 -50 -200 30
+
+###################################################
+
+###################################################
 
 # plane declaration
-plane 255 0 0 0 -50 300 0 1 0
+plane 100 100 100 0 -50 300 0 1 0
 
 # plane declaration
-plane 255 0 0 0 50 300 0 0 1
+plane 100 100 100   0 50 300  0 0 1
 
 # plane declaration
-#plane 255 0 0 0 50 300 0 1 0
+plane 100 100 100   0 250 300  0 1 0
+
+###################################################
 
 # cone declaration
-cone 0 255 0 0 0 100 1 1 0 30
+cone 0 0 255 0 100 -250 0 1 0 30
+
+###################################################
+
+# sphere declaration
+sphere 0 0 255  0 100 -250 30
