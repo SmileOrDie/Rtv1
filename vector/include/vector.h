@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:13:03 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/05 11:46:52 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 14:58:22 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,25 @@ typedef struct	s_vector
 }				t_vector;
 
 t_vector		*new_v(double a, double b, double c);
+t_vector 		new_v2(double x, double y, double z);
+
 t_vector		*vadd(t_vector *a, t_vector *b);
+t_vector 		vadd2(t_vector *a, t_vector *b);
+
 t_vector		*vsub(t_vector *a, t_vector *b);
+t_vector 		vsub2(t_vector *a, t_vector *b);
+
 t_vector		*vmult(t_vector *a, t_vector *b);
+t_vector		vmult2(t_vector *a, t_vector *b);
+
 t_vector		*vhit(t_vector *pos, t_vector *dir, double dist);
+t_vector		vhit2(t_vector *pos, t_vector *dir, double dist);
+
 double			vpscal(t_vector *a, t_vector *b);
 void			vnorm(t_vector *a);
+
 t_vector 		*vmult_dbl(t_vector *a, double b);
+t_vector 		vmult_dbl2(t_vector *a, double b);
+
 
 #endif

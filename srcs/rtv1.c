@@ -6,45 +6,51 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 11:31:39 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/12 13:12:21 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 16:39:25 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-static void init(t_env *e)
+static void		init(t_env *e)
 {
 	if (!(e->mlx = (t_mlx*)malloc(sizeof(t_mlx))))
-		ft_error (MALLOC , "int	ft_parse(char *name, t_env *e)(e->mlx)");
+		ft_error(MALLOC, "int	ft_parse(char *name, t_env *e)(e->mlx)");
 	e->light = NULL;
 	e->obj = NULL;
 	e->cam = NULL;
-	e->mlx->w = 640;
-	e->mlx->h = 400;
+	e->mlx->w = W;
+	e->mlx->h = H;
 	e->amb = 0.4;
 }
 
-static void	init_mlx(t_env *e)
+static void		init_mlx(t_env *e)
 {
-	if(!(e->mlx->mlx = mlx_init()))
-		ft_error(MLX, "static int	init_mlx(t_env *e) (=>mlx_init())-(rtv1.c))");
-	else if(!(e->mlx->win = mlx_new_window(e->mlx->mlx, e->mlx->w, e->mlx->h, "rtv1")))
-		ft_error(MLX, "static int	init_mlx(t_env *e) (=>mlx_new_window())-(rtv1.c))");
-	else if(!(e->mlx->img = mlx_new_image(e->mlx->mlx, e->mlx->w, e->mlx->h)))
-		ft_error(MLX, "static int	init_mlx(t_env *e) (=>mlx_new_image())-(rtv1.c))");
-	else if(!(e->mlx->data = mlx_get_data_addr(e->mlx->img, &(e->mlx->bpp), &(e->mlx->sizeline), &(e->mlx->endian))))
-		ft_error(MLX, "static int	init_mlx(t_env *e) (=>mlx_get_data_addr())-(rtv1.c))");
+	if (!(e->mlx->mlx = mlx_init()))
+		ft_error(MLX,
+			"static int	init_mlx(t_env *e) (=>mlx_init())-(rtv1.c))");
+	else if (!(e->mlx->win =
+		mlx_new_window(e->mlx->mlx, e->mlx->w, e->mlx->h, "rtv1")))
+		ft_error(MLX,
+			"static int init_mlx(t_env *e) (=>mlx_new_window())-(rtv1.c))");
+	else if (!(e->mlx->img = mlx_new_image(e->mlx->mlx, e->mlx->w, e->mlx->h)))
+		ft_error(MLX,
+			"static int init_mlx(t_env *e) (=>mlx_new_image())-(rtv1.c))");
+	else if (!(e->mlx->data = mlx_get_data_addr(e->mlx->img, &(e->mlx->bpp),
+		&(e->mlx->sizeline), &(e->mlx->endian))))
+		ft_error(MLX,
+			"static int init_mlx(t_env *e) (=>mlx_get_data_addr())-(rtv1.c))");
 }
 
-static void event_touch(t_env *e)
+static void		event_touch(t_env *e)
 {
 	mlx_hook(e->mlx->win, 2, 0, &keypress, e);
 	mlx_hook(e->mlx->win, 17, 0, &redcross, e);
 }
 
-int			main(int ac,char **av)
+int				main(int ac, char **av)
 {
-	t_env e;
+	t_env		e;
 
 	if (ac == 2)
 	{
@@ -53,6 +59,7 @@ int			main(int ac,char **av)
 		init_mlx(&e);
 		start_ray(&e);
 		event_touch(&e);
+		// exit(1);
 		mlx_loop(e.mlx->mlx);
 	}
 	else

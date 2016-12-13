@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:50:07 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/08 09:40:30 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 15:01:15 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,16 @@ t_vector *vmult(t_vector *a, t_vector *b)
 		c->z = a->z * b->z;
 		c->p = 1;
 	}
+	return (c);
+}
+
+t_vector vmult2(t_vector *a, t_vector *b)
+{
+	t_vector c;
+
+	c.x = a->x * b->x;
+	c.y = a->y * b->y;
+	c.z = a->z * b->z;
+	c.p = 1;
 	return (c);
 }

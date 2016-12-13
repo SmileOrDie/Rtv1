@@ -5,7 +5,7 @@
 img_size 640 400
 
 # camera declaration
-cam -400 100 -50 0 0 200 0 -1 0 60 150
+cam -400 100 -50 0 0 0 0 -1 0 60 150
 
 # light declaration
 light 1 1 1 -150 200 200 1.0

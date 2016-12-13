@@ -6,36 +6,36 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 12:35:50 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/12 13:03:37 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:17:25 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-static void 	creat_lst(char **line, t_env *e)
+static void		creat_lst(char **line, t_env *e)
 {
 	int len;
 
 	len = ft_tablen(&line, 0);
-	if(len == 3 && ft_strcmp(line[0], "img_size") == 0 && e->flag == 0)
+	if (len == 3 && ft_strcmp(line[0], "img_size") == 0 && e->flag == 0)
 	{
 		e->flag = 1;
 		e->mlx->w = ft_atoi(line[1]);
 		e->mlx->h = ft_atoi(line[2]);
 	}
-	else if (len > 7 && e->obj && ft_strcmp(line[0], "light") != 0 
+	else if (len > 7 && e->obj && ft_strcmp(line[0], "light") != 0
 		&& ft_strcmp(line[0], "cam") != 0)
 	{
 		e->obj->next = add_obj(line, len);
 		e->obj = e->obj->next;
 	}
-	else if (len > 7 && ft_strcmp(line[0], "light") 
+	else if (len > 7 && ft_strcmp(line[0], "light")
 		&& ft_strcmp(line[0], "cam"))
 	{
 		e->obj = add_obj(line, len);
 		e->l_obj = e->obj;
 	}
-	else if ((len > 7 || len == 2)&& (ft_strcmp(line[0], "light") == 0
+	else if ((len > 7 || len == 2) && (ft_strcmp(line[0], "light") == 0
 		|| ft_strcmp(line[0], "cam") == 0 || !ft_strcmp(line[0], "ambient")))
 		add_env(line, e);
 	ft_tablen(&line, 1);
@@ -44,7 +44,7 @@ static void 	creat_lst(char **line, t_env *e)
 void			ft_check_var(t_env *e)
 {
 	if (e->amb < 0 || e->mlx->w < 0 || e->mlx->h < 0)
-		ft_error("parse error :", 
+		ft_error("parse error :",
 				"a variable ambient or width or height can't be < 0");
 	else if (e->cam == NULL)
 		ft_error("camera error :", "no cam");
@@ -56,23 +56,23 @@ void			ft_check_var(t_env *e)
 
 void			ft_parse(char *name, t_env *e)
 {
-	int fd;
-	int r;
-	char *line;
+	int			fd;
+	int			r;
+	char		*line;
 
 	e->flag = 0;
 	fd = open(name, O_RDONLY);
 	while ((r = get_next_line(fd, &line)) >= 0)
 	{
-		if (r == -1)
-			ft_error(FILES_E, name);
 		if (*line && *line != '#')
 			creat_lst(ft_strsplit(line, ' '), e);
 		free(line);
-		if(r == 0)
-			break;
+		if (r == 0)
+			break ;
 	}
-	close(fd);
+	close(fd);		
+	if (r == -1)
+		ft_error(FILES_E, name);
 	e->obj = e->l_obj;
 	e->light = e->d_light;
 	ft_check_var(e);

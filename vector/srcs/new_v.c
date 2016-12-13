@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:05:18 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/08 10:19:13 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 14:48:01 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,16 @@ t_vector *new_v(double x, double y, double z)
 		new->z = z;
 		new->p = 1;
 	}
+	return (new);
+}
+
+t_vector new_v2(double x, double y, double z)
+{
+	t_vector new;
+
+	new.x = x;
+	new.y = y;
+	new.z = z;
+	new.p = 1;
 	return (new);
 }

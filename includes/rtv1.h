@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:45:45 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/08 16:24:55 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:05:07 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 # include "error.h"
 # include "../libft/includes/libft.h"
 # include "../vector/include/vector.h"
-# include "../matrix/include/matrix.h"
 # include <mlx.h>
 # include <fcntl.h>
 
 #include <stdio.h>
-
 
 # define ESC 53
 

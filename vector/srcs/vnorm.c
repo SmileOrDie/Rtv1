@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 15:55:29 by shamdani          #+#    #+#             */
-/*   Updated: 2016/11/15 10:48:24 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/12 15:39:55 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	vnorm(t_vector *a)
 {
 	double		id;
 
-	if (!a)
-		ft_error (ARG_N , "void	vnorm(t_vector *a);");
 	if (a->x + a->y + a->z == 0)
 		id = 0;
 	else

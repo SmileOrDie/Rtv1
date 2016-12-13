@@ -1,22 +1,23 @@
 # Scene2 du rtv1
 # after the declaration of element, if you doesn't give a value to parameter its automaticly set to 0.
 
-
-
 # Ambient declaration
-ambient 0.1
+ambient 0.5
 
 # windows size declaration
-img_size 1040 800 
+img_size 510 260
 
 # camera declaration
-cam 0 150 -1550 0 0 0 0 -1 0 60 150
+cam 0 150 -700 0 0 0 0 -1 0 60 150
 
 # light declaration
 light 1 1 1 150 70 -300 1
 
 # light declaration
-light 1 1 1 -150 70 -300 1
+#light 1 1 1 -150 70 -300 1
+
+# sphere declaration
+sphere 255 255 255 -150 70 -300 10
 
 ###################################################
 

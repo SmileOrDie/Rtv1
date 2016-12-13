@@ -6,7 +6,7 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:47:49 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/12 12:22:39 by shamdani         ###   ########.fr       */
+/*   Updated: 2016/12/13 18:01:30 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 static int		inter_obj(t_env *e, t_vector *pos, t_vector *dir, double *t)
 {
-	t_obj 		*lst;
+	t_obj		*lst;
 	double		tr;
-
 
 	lst = e->l_obj;
 	tr = *t;
@@ -34,81 +33,78 @@ static int		inter_obj(t_env *e, t_vector *pos, t_vector *dir, double *t)
 	return (0);
 }
 
-static void	l_color(t_env *e, double inte)
+static double ft_sat(double l)
 {
-	int tmp;
+	l = l > 1 ? 1 : l;
+	l = l < 0 ? 0 : l;
+	return (l);
+}
 
-	if (e->r > 255)
-	{
-		tmp = (e->r - 255) * inte;
-		e->g += tmp;
-		e->b += tmp;
-	}
-	if (e->g > 255)
-	{
-		tmp = (e->g - 255) * inte;
-		e->r += tmp;
-		e->b += tmp;
-	}
-	if (e->b > 255)
-	{
-		tmp = (e->b - 255) * inte;
-		e->r += tmp;
-		e->g += tmp;
-	}
+static void		l_color(t_env *e, double inte)
+{
+	double tmp;
+
+	tmp = pow(ft_sat(inte), 200) * e->light->intensity * 255;
+	e->r = (e->r + tmp) * 1;
+	e->g = (e->g + tmp) * 1;
+	e->b = (e->b + tmp) * 1;
 	(e->r > 255) ? e->r = 255 : 0;
 	(e->g > 255) ? e->g = 255 : 0;
 	(e->b > 255) ? e->b = 255 : 0;
 }
 
-void		ft_raytracer(int x, int y, t_env *e)
+static void		add_light(t_env *e, double t, t_vector *phit)
 {
-	//creer une structure contenant toute les variable
-	t_vector	*ray;
-	t_vector	*phit;
-	t_vector	*dir;
-	t_vector	*dir_l;
-	double		t;
-	double 		a;
-	double		b;
-	double		c;
+	t_vector	dir_l;
 
-	a = e->cam->l->x + e->cam->u->x * x * (e->cam->w / e->mlx->w) + e->cam->up->x * y * (e->cam->h / e->mlx->h);
-	b = e->cam->l->y + e->cam->u->y * x * (e->cam->w / e->mlx->w) + e->cam->up->y * y * (e->cam->h / e->mlx->h);
-	c = e->cam->l->z + e->cam->u->z * x * (e->cam->w / e->mlx->w) + e->cam->up->z * y * (e->cam->h / e->mlx->h);
-	ray = new_v(a, b, c);
-	dir = vsub(ray, e->cam->eye);
-	vnorm(dir);
+	e->flag = 1;
+	while (e->light)
+	{
+
+		dir_l = vsub2(e->light->pos, phit);
+		// t = sqrt(vpscal(&dir_l, &dir_l));
+		t = sqrt(dir_l.x * dir_l.x + dir_l.y * dir_l.y + dir_l.z * dir_l.z);
+		vnorm(&dir_l);
+		if (!(inter_obj(e, phit, &dir_l, &t)))
+		{
+			e->obj->angle_func(e, phit, &dir_l);
+			e->r += e->c_hit->r * e->light->color->x * e->light->angle;
+			e->g += e->c_hit->g * e->light->color->y * e->light->angle;
+			e->b += e->c_hit->b * e->light->color->z * e->light->angle;
+			l_color(e, e->light->angle);
+		}
+		else
+			e->light->angle = 0;
+		e->light = e->light->next;
+	}
+	e->flag = 0;
+	e->light = e->d_light;
+}
+
+static void		ft_raytracer(int x, int y, t_env *e)
+{
+	t_vector	ray;
+	t_vector	phit;
+	t_vector	dir;
+	double		t;
+
+	ray = new_v2(e->cam->l->x + e->cam->u->x * x * (e->cam->w / e->mlx->w) + e->
+		cam->up->x * y * (e->cam->h / e->mlx->h), e->cam->l->y + e->cam->u->y *
+		x * (e->cam->w / e->mlx->w) + e->cam->up->y * y * (e->cam->h / e->mlx->
+		h), e->cam->l->z + e->cam->u->z * x * (e->cam->w / e->mlx->w) + e->
+		cam->up->z * y * (e->cam->h / e->mlx->h));
+	dir = vsub2(&ray, e->cam->eye);
+	vnorm(&dir);
 	t = T;
 	e->d_light = e->light;
 	e->flag = 0;
-	if (inter_obj(e, e->cam->eye, dir, &t))
+	if (inter_obj(e, e->cam->eye, &dir, &t) && ((e->c_hit = e->obj->color) || 1))
 	{
-		e->c_hit = e->obj->color;
 		e->r = e->c_hit->r * e->amb;
 		e->g = e->c_hit->g * e->amb;
 		e->b = e->c_hit->b * e->amb;
-		phit = vhit(e->cam->eye, dir, t);
-		e->flag = 1;
-		while (e->light)
-		{
-			dir_l = vsub(e->light->pos, phit);
-			t = sqrt(vpscal(dir_l, dir_l));
-			vnorm(dir_l);
-			if (!(inter_obj(e, phit, dir_l, &t)))
-			{
-				e->obj->angle_func(e, phit, dir_l);
-				e->r += e->c_hit->r * e->light->color->x * e->light->angle;
-				e->g += e->c_hit->g * e->light->color->y * e->light->angle;
-				e->b += e->c_hit->b * e->light->color->z * e->light->angle;
-				l_color(e, e->light->intensity);
-			}
-			else
-				e->light->angle = 0;
-			e->light = e->light->next;
-			free(dir_l);
-		}
-		e->light = e->d_light;
+		phit = vhit2(e->cam->eye, &dir, t);
+		add_light(e, t, &phit);
 		put_pixel(x, y, e);
 	}
 }
@@ -125,5 +121,5 @@ void			start_ray(t_env *e)
 		while (++y < e->mlx->h)
 			ft_raytracer(x, y, e);
 	}
-	mlx_put_image_to_window(e->mlx->mlx, e->mlx->win, e->mlx->img, 0 , 0);
+	mlx_put_image_to_window(e->mlx->mlx, e->mlx->win, e->mlx->img, 0, 0);
 }
