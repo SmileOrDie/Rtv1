@@ -1,9 +1,0 @@
-# Scene1 du rtv1
-# sphere declaration : sphere color position radius.
-# cylinder declaration : cylinder color position direction radius.
-# camera declaration :
-# image size declaration : img_size width height.
-# after the declaration of element, if you doesn't give a value to parameter its automaticly set to 0.
-
-# sphere declaration
-sphere 0 0 255 -100 100 200 20
