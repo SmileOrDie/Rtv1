@@ -6,13 +6,13 @@
 /*   By: shamdani <shamdani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 10:44:40 by shamdani          #+#    #+#             */
-/*   Updated: 2016/12/15 21:15:45 by shamdani         ###   ########.fr       */
+/*   Updated: 2017/01/11 17:21:49 by shamdani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vector.h"
 
-t_vector 	*vmult_dbl(t_vector *a, double b)
+t_vector	*vmult_dbl(t_vector *a, double b)
 {
 	t_vector *ret;
 
@@ -20,7 +20,7 @@ t_vector 	*vmult_dbl(t_vector *a, double b)
 	return (ret);
 }
 
-t_vector 	vmult_dbl2(t_vector *a, double b)
+t_vector	vmult_dbl2(t_vector *a, double b)
 {
 	t_vector ret;
 
